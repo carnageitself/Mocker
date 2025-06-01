@@ -118,19 +118,12 @@ const Agent = ({
     setCallStatus(CallStatus.CONNECTING);
 
     if (type === "generate") {
-      await vapi.start(
-        undefined,
-        {
-          variableValues: {
-            username: userName,
-            userid: userId,
-          },
-          clientMessages: ["transcript"],
-          serverMessages: [],
+      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+        variableValues: {
+          username: userName,
+          userid: userId,
         },
-        undefined,
-        generator
-      );
+      });
     } else {
       let formattedQuestions = "";
       if (questions) {
@@ -143,8 +136,6 @@ const Agent = ({
         variableValues: {
           questions: formattedQuestions,
         },
-        clientMessages: ["transcript"],
-        serverMessages: [],
       });
     }
   };

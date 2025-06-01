@@ -1,4 +1,4 @@
-import { CreateAssistantDTO, CreateWorkflowDTO } from "@vapi-ai/web/dist/api";
+import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 import { z } from "zod";
 
 export const mappings = {
@@ -97,198 +97,99 @@ export const mappings = {
   "aws amplify": "amplify",
 };
 
-export const generator: CreateWorkflowDTO = {
-  name: "Generate Interview",
-  nodes: [
+export const generator: CreateAssistantDTO = {
+  name: "Interview Generator",
+  firstMessage:
+    "Hello! I'm here to help you generate personalized interview questions. I'll need some information about the role and your requirements to create the perfect set of questions for you.",
+  transcriber: {
+    provider: "deepgram",
+    model: "nova-2",
+    language: "en",
+  },
+  voice: {
+    provider: "vapi",
+    voiceId: "Neha",
+    speed: 0.9,
+  },
+  model: {
+    provider: "openai",
+    model: "gpt-4",
+    messages: [
+      {
+        role: "system",
+        content: `You are a professional AI assistant specialized in generating interview questions. Your role is to help users create customized interview questions based on their specific requirements.
+
+Your Process:
+1. Greet the user and ask for their interview requirements
+2. Collect the following information:
+   - Job Role (e.g., Frontend Developer, Backend Developer, Full Stack, etc.)
+   - Experience Level (entry/junior, mid-level, senior)
+   - Interview Type (technical, behavioral, mixed)
+   - Tech Stack (specific technologies to focus on)
+   - Number of Questions (typically 5-15)
+
+3. Once you have all the information, call the generate_interview function
+
+Guidelines for Question Generation:
+- Match questions to the experience level appropriately
+- Focus on relevant technologies from their tech stack
+- For technical questions: core concepts, problem-solving, best practices
+- For behavioral questions: past experiences, teamwork, challenges
+- For mixed: balanced combination of both types
+
+Technology Mappings Available:
+${Object.keys(mappings).join(", ")}
+
+Variables available:
+- username: {{username}}
+- userid: {{userid}}
+
+Keep responses conversational and professional. This is a voice conversation, so keep responses concise and clear.`,
+      },
+    ],
+  },
+  functions: [
     {
-      name: "start",
-      type: "conversation",
-      isStart: true,
-      metadata: {
-        position: {
-          x: 0,
-          y: 0,
-        },
-      },
-      prompt:
-        "Speak first. Greet the user and help them create a new AI Interviewer",
-      voice: {
-        model: "aura-2",
-        voiceId: "thalia",
-        provider: "deepgram",
-      },
-      variableExtractionPlan: {
-        output: [
-          {
-            title: "level",
-            description: "The job experience level.",
-            type: "string",
-            enum: ["entry", "mid", "senior"],
-          },
-          {
-            title: "amount",
-            description: "How many questions would you like to generate?",
-            type: "number",
-            enum: [],
-          },
-          {
-            title: "techstack",
-            description:
-              "A list of technologies to cover during the job interview. For example, React, Next.js, Express.js, Node and so on...",
-            type: "string",
-            enum: [],
-          },
-          {
-            title: "role",
-            description:
-              "What role should would you like to train for? For example Frontend, Backend, Fullstack, Design, UX?",
-            type: "string",
-            enum: [],
-          },
-          {
-            title: "type",
-            description: "What type of the interview should it be? ",
-            type: "string",
-            enum: ["behavioural", "technical", "mixed"],
-          },
-        ],
-      },
-    },
-    {
-      name: "apiRequest_1747470739045",
-      type: "apiRequest",
-      metadata: {
-        position: {
-          x: -16.075937072883846,
-          y: 703.623428447121,
-        },
-      },
-      method: "POST",
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/vapi/generate`,
-      headers: {
-        type: "object",
-        properties: {},
-      },
-      body: {
+      name: "generate_interview",
+      description: "Generate interview questions based on user requirements",
+      parameters: {
         type: "object",
         properties: {
           role: {
             type: "string",
-            description: "",
-            value: "{{ role }}",
+            description:
+              "The job role (e.g., Frontend Developer, Backend Developer)",
           },
           level: {
             type: "string",
-            description: "",
-            value: "{{ level }}",
+            enum: ["entry", "mid", "senior"],
+            description: "Experience level",
           },
           type: {
             type: "string",
-            description: "",
-            value: "{{ type }}",
-          },
-          amount: {
-            type: "number",
-            description: "",
-            value: "{{ amount }}",
-          },
-          userid: {
-            type: "string",
-            description: "",
-            value: "{{ userid }}",
+            enum: ["technical", "behavioural", "mixed"],
+            description: "Type of interview",
           },
           techstack: {
             type: "string",
-            description: "",
-            value: "{{ techstack }}",
+            description: "Comma-separated list of technologies to focus on",
+          },
+          amount: {
+            type: "number",
+            minimum: 3,
+            maximum: 20,
+            description: "Number of questions to generate",
+          },
+          userid: {
+            type: "string",
+            description: "User ID for saving the interview",
           },
         },
-      },
-      output: {
-        type: "object",
-        properties: {},
-      },
-      mode: "blocking",
-      hooks: [],
-    },
-    {
-      name: "conversation_1747721261435",
-      type: "conversation",
-      metadata: {
-        position: {
-          x: -17.547788169718615,
-          y: 1003.3409337989506,
-        },
-      },
-      prompt:
-        "Thank the user for the conversation and inform them that the interview was generated successfully.",
-      voice: {
-        provider: "deepgram",
-        voiceId: "thalia",
-        model: "aura-2",
-      },
-    },
-    {
-      name: "conversation_1747744490967",
-      type: "conversation",
-      metadata: {
-        position: {
-          x: -11.165436030430953,
-          y: 484.94857971060617,
-        },
-      },
-      prompt: "Say that the Interview will be generated shortly.",
-      voice: {
-        provider: "deepgram",
-        voiceId: "thalia",
-        model: "aura-2",
-      },
-    },
-    {
-      name: "hangup_1747744730181",
-      type: "hangup",
-      metadata: {
-        position: {
-          x: 76.01267674000721,
-          y: 1272.0665127156606,
-        },
+        required: ["role", "level", "type", "techstack", "amount", "userid"],
       },
     },
   ],
-  edges: [
-    {
-      from: "apiRequest_1747470739045",
-      to: "conversation_1747721261435",
-      condition: {
-        type: "ai",
-        prompt: "",
-      },
-    },
-    {
-      from: "start",
-      to: "conversation_1747744490967",
-      condition: {
-        type: "ai",
-        prompt: "If user provided all the required variables",
-      },
-    },
-    {
-      from: "conversation_1747744490967",
-      to: "apiRequest_1747470739045",
-      condition: {
-        type: "ai",
-        prompt: "",
-      },
-    },
-    {
-      from: "conversation_1747721261435",
-      to: "hangup_1747744730181",
-      condition: {
-        type: "ai",
-        prompt: "",
-      },
-    },
-  ],
+  serverUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/vapi/generate`,
 };
 
 export const interviewer: CreateAssistantDTO = {
@@ -301,13 +202,9 @@ export const interviewer: CreateAssistantDTO = {
     language: "en",
   },
   voice: {
-    provider: "11labs",
-    voiceId: "sarah",
-    stability: 0.4,
-    similarityBoost: 0.8,
+    provider: "vapi",
+    voiceId: "Neha",
     speed: 0.9,
-    style: 0.5,
-    useSpeakerBoost: true,
   },
   model: {
     provider: "openai",
@@ -330,7 +227,7 @@ Be professional, yet warm and welcoming:
 Use official yet friendly language.
 Keep responses concise and to the point (like in a real voice interview).
 Avoid robotic phrasing—sound natural and conversational.
-Answer the candidate’s questions professionally:
+Answer the candidate's questions professionally:
 
 If asked about the role, company, or expectations, provide a clear and relevant answer.
 If unsure, redirect the candidate to HR for more details.
@@ -339,7 +236,6 @@ Conclude the interview properly:
 Thank the candidate for their time.
 Inform them that the company will reach out soon with feedback.
 End the conversation on a polite and positive note.
-
 
 - Be sure to be professional and polite.
 - Keep all your responses short and simple. Use official language, but be kind and welcoming.
