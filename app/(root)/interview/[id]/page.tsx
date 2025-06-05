@@ -172,9 +172,9 @@ export default async function InterviewDetails({ params }: RouteParams) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
-      {/* Enhanced Navigation Bar with Meeting Info */}
+      {/* Compact Navigation Bar */}
       <div className="bg-slate-800/50 backdrop-blur-sm border-b border-slate-700/50">
-        <div className="container mx-auto px-6 py-4">
+        <div className="px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 text-sm text-slate-400">
               <Link href="/" className="hover:text-white transition-colors">
@@ -191,52 +191,54 @@ export default async function InterviewDetails({ params }: RouteParams) {
               <span className="text-white">Interview Panel</span>
             </div>
 
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2 text-sm">
+            <div className="flex items-center space-x-4 text-sm">
+              <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-red-400 font-medium">LIVE INTERVIEW</span>
+                <span className="text-red-400 font-medium">LIVE</span>
               </div>
-              <div className="text-sm text-slate-400 bg-slate-700/50 px-3 py-1 rounded-full">
-                {formatDate(interview.createdAt)}
+              <div className="text-slate-400">
+                {interviewPanel.length + 1} Participants
               </div>
-              <div className="flex items-center space-x-2 text-sm text-slate-400">
-                <span>👥</span>
-                <span>{interviewPanel.length + 1} Participants</span>
+              <div className="text-slate-400 bg-slate-700/50 px-3 py-1 rounded-full">
+                {new Date().toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Corporate Header */}
+      {/* Compact Header */}
       <div className="relative bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 border-b border-slate-600">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-purple-900/20 to-blue-900/20"></div>
-        <div className="relative container mx-auto px-6 py-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <div className="flex items-center space-x-6">
+        <div className="relative px-6 py-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div className="flex items-center space-x-4">
               <div className="relative">
-                <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-purple-700 rounded-2xl flex items-center justify-center shadow-2xl border-2 border-slate-500">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-700 rounded-xl flex items-center justify-center shadow-xl border-2 border-slate-500">
                   <Image
                     src={getRandomInterviewCover()}
                     alt="Company Logo"
-                    width={64}
-                    height={64}
-                    className="rounded-xl object-cover"
+                    width={48}
+                    height={48}
+                    className="rounded-lg object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full border-4 border-slate-800 flex items-center justify-center shadow-lg">
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full border-2 border-slate-800 flex items-center justify-center">
                   <span className="text-white text-xs font-bold">✓</span>
                 </div>
               </div>
 
               <div>
-                <h1 className="text-4xl lg:text-5xl font-bold text-white mb-3">
+                <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">
                   {interview.role} Interview
                 </h1>
-                <div className="flex items-center space-x-4 text-slate-300">
-                  <span className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3 text-sm text-slate-300">
+                  <span className="flex items-center space-x-1">
                     <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
-                    <span className="font-medium">Panel Interview</span>
+                    <span>Panel Interview</span>
                   </span>
                   <span>•</span>
                   <span>{interview.questions.length} Questions</span>
@@ -250,9 +252,9 @@ export default async function InterviewDetails({ params }: RouteParams) {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               <div
-                className={`px-6 py-3 rounded-full border font-medium backdrop-blur-sm ${getTypeColor(
+                className={`px-4 py-2 rounded-full border font-medium backdrop-blur-sm text-sm ${getTypeColor(
                   interview.type
                 )}`}
               >
@@ -262,11 +264,11 @@ export default async function InterviewDetails({ params }: RouteParams) {
                     interview.type.toLowerCase() === "behavioral"
                   ? "🗣️"
                   : "🎯"}{" "}
-                {interview.type} Interview
+                {interview.type}
               </div>
 
               <div
-                className={`px-6 py-3 rounded-full border font-medium backdrop-blur-sm ${getLevelColor(
+                className={`px-4 py-2 rounded-full border font-medium backdrop-blur-sm text-sm ${getLevelColor(
                   interview.level
                 )}`}
               >
@@ -276,27 +278,27 @@ export default async function InterviewDetails({ params }: RouteParams) {
                   ? "🚀"
                   : "👑"}{" "}
                 {interview.level.charAt(0).toUpperCase() +
-                  interview.level.slice(1)}{" "}
-                Level
+                  interview.level.slice(1)}
               </div>
             </div>
           </div>
 
-          <div className="mt-6 p-6 bg-slate-800/80 backdrop-blur-sm rounded-xl border border-slate-600/50">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex flex-wrap items-center gap-4">
-                <span className="text-slate-300 font-medium">
-                  Required Technologies:
+          {/* Tech Stack Info */}
+          <div className="mt-4 p-4 bg-slate-800/60 backdrop-blur-sm rounded-lg border border-slate-600/50">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="text-slate-300 font-medium text-sm">
+                  Technologies:
                 </span>
                 <DisplayTechIcons techStack={interview.techstack} />
               </div>
               {feedback && (
                 <Link
                   href={`/feedback/${id}`}
-                  className="text-blue-400 hover:text-blue-300 transition-colors font-medium flex items-center space-x-2 bg-blue-500/10 hover:bg-blue-500/20 px-4 py-2 rounded-lg border border-blue-500/30"
+                  className="text-blue-400 hover:text-blue-300 transition-colors font-medium flex items-center space-x-2 bg-blue-500/10 hover:bg-blue-500/20 px-3 py-1.5 rounded-lg border border-blue-500/30 text-sm"
                 >
                   <span>📊</span>
-                  <span>View Previous Results</span>
+                  <span>View Results</span>
                 </Link>
               )}
             </div>
@@ -304,187 +306,145 @@ export default async function InterviewDetails({ params }: RouteParams) {
         </div>
       </div>
 
-      {/* Main Interview Conference Room */}
-      <div className="container mx-auto px-6 py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-3xl shadow-2xl overflow-hidden border border-slate-700">
-            {/* Conference Room Header */}
-            <div className="relative bg-gradient-to-r from-slate-800/90 to-slate-700/90 backdrop-blur-sm px-8 py-6 border-b border-slate-600/50">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 via-purple-900/10 to-blue-900/10"></div>
-              <div className="relative flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg border border-slate-600">
-                    <span className="text-white text-2xl">🏢</span>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-white">
-                      Interview Conference Room
-                    </h2>
-                    <p className="text-slate-300 text-sm">
-                      {interview.role} Position • Panel Interview Session
-                    </p>
-                  </div>
-                </div>
+      {/* Full Width Agent Interface */}
+      <div className="w-full">
+        <Agent
+          userName={user?.name!}
+          userId={user?.id}
+          interviewId={id}
+          type="interview"
+          questions={interview.questions}
+          feedbackId={feedback?.id}
+          interviewRole={interview.role}
+        />
+      </div>
 
-                <div className="flex items-center space-x-6">
-                  <div className="hidden sm:flex items-center space-x-6 text-sm">
-                    <div className="flex items-center space-x-2 text-red-400">
-                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                      <span className="font-medium">Recording</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-green-400">
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span>4K Quality</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-blue-400">
-                      <span>SECURE</span>
-                    </div>
-                  </div>
-
-                  <div className="text-sm text-slate-300 bg-slate-700/50 px-4 py-2 rounded-full border border-slate-600/50">
-                    {new Date().toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative p-4">
-              {/* Agent Interface - Full Screen */}
-              <Agent
-                userName={user?.name!}
-                userId={user?.id}
-                interviewId={id}
-                type="interview"
-                questions={interview.questions}
-                feedbackId={feedback?.id}
-                interviewRole={interview.role}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Enhanced Bottom Panel */}
-        <div className="mt-8 max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
-              <h4 className="text-white font-semibold mb-4 flex items-center space-x-2">
-                <span className="text-blue-400">SESSION</span>
-              </h4>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between text-slate-300">
-                  <span>Duration:</span>
-                  <span className="text-white">
-                    {Math.ceil(interview.questions.length * 3)} minutes
-                  </span>
-                </div>
-                <div className="flex justify-between text-slate-300">
-                  <span>Questions:</span>
-                  <span className="text-white">
-                    {interview.questions.length}
-                  </span>
-                </div>
-                <div className="flex justify-between text-slate-300">
-                  <span>Panel Size:</span>
-                  <span className="text-white">
-                    {interviewPanel.length + 1}
-                  </span>
-                </div>
-                <div className="flex justify-between text-slate-300">
-                  <span>Type:</span>
-                  <span className="text-white capitalize">
-                    {interview.type}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
-              <h4 className="text-white font-semibold mb-4 flex items-center space-x-2">
-                <span className="text-green-400">TIPS</span>
-              </h4>
-              <ul className="space-y-2 text-sm text-slate-300">
-                <li className="flex items-start space-x-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  <span>Make eye contact with all panelists</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  <span>Address questions to the whole panel</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  <span>Ask questions to different members</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  <span>Stay confident and composed</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
-              <h4 className="text-white font-semibold mb-4 flex items-center space-x-2">
-                <span className="text-purple-400">PANEL</span>
-              </h4>
-              <div className="space-y-2 text-sm">
-                {interviewPanel.map((panelist) => (
-                  <div
-                    key={panelist.id}
-                    className="flex items-center space-x-2 text-slate-300"
-                  >
-                    <div
-                      className={`w-2 h-2 rounded-full ${
-                        getStatusIndicator(panelist.status).color.includes(
-                          "green"
-                        )
-                          ? "bg-green-500"
-                          : getStatusIndicator(panelist.status).color.includes(
-                              "blue"
-                            )
-                          ? "bg-blue-500"
-                          : getStatusIndicator(panelist.status).color.includes(
-                              "purple"
-                            )
-                          ? "bg-purple-500"
-                          : "bg-gray-500"
-                      }`}
-                    ></div>
-                    <span className="text-white font-medium">
-                      {panelist.name}
+      {/* Bottom Information Panel */}
+      <div className="bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-sm border-t border-slate-600/50 py-6">
+        <div className="px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-4 gap-4">
+              {/* Session Info */}
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-4 border border-slate-700/50">
+                <h4 className="text-white font-semibold mb-3 flex items-center space-x-2 text-sm">
+                  <span className="text-blue-400">SESSION</span>
+                </h4>
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between text-slate-300">
+                    <span>Duration:</span>
+                    <span className="text-white">
+                      {Math.ceil(interview.questions.length * 3)} min
                     </span>
                   </div>
-                ))}
+                  <div className="flex justify-between text-slate-300">
+                    <span>Questions:</span>
+                    <span className="text-white">
+                      {interview.questions.length}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Panel Size:</span>
+                    <span className="text-white">
+                      {interviewPanel.length + 1}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Type:</span>
+                    <span className="text-white capitalize">
+                      {interview.type}
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
-              <h4 className="text-white font-semibold mb-4 flex items-center space-x-2">
-                <span className="text-purple-400">ACTIONS</span>
-              </h4>
-              <div className="space-y-3">
-                <Link
-                  href="/"
-                  className="block w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-center rounded-lg border border-slate-600 hover:border-slate-500 transition-all duration-200 text-sm"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href="/createinterview"
-                  className="block w-full px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-center rounded-lg transition-all duration-200 text-sm"
-                >
-                  New Interview
-                </Link>
-                {feedback && (
+              {/* Tips */}
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-4 border border-slate-700/50">
+                <h4 className="text-white font-semibold mb-3 flex items-center space-x-2 text-sm">
+                  <span className="text-green-400">TIPS</span>
+                </h4>
+                <ul className="space-y-1.5 text-xs text-slate-300">
+                  <li className="flex items-start space-x-2">
+                    <span className="text-green-400 mt-0.5">•</span>
+                    <span>Make eye contact with all panelists</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-green-400 mt-0.5">•</span>
+                    <span>Address the whole panel</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-green-400 mt-0.5">•</span>
+                    <span>Ask questions to different members</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-green-400 mt-0.5">•</span>
+                    <span>Stay confident and composed</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Panel Members */}
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-4 border border-slate-700/50">
+                <h4 className="text-white font-semibold mb-3 flex items-center space-x-2 text-sm">
+                  <span className="text-purple-400">PANEL</span>
+                </h4>
+                <div className="space-y-1.5 text-xs">
+                  {interviewPanel.map((panelist) => (
+                    <div
+                      key={panelist.id}
+                      className="flex items-center space-x-2 text-slate-300"
+                    >
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          getStatusIndicator(panelist.status).color.includes(
+                            "green"
+                          )
+                            ? "bg-green-500"
+                            : getStatusIndicator(
+                                panelist.status
+                              ).color.includes("blue")
+                            ? "bg-blue-500"
+                            : getStatusIndicator(
+                                panelist.status
+                              ).color.includes("purple")
+                            ? "bg-purple-500"
+                            : "bg-gray-500"
+                        }`}
+                      ></div>
+                      <span className="text-white font-medium">
+                        {panelist.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-4 border border-slate-700/50">
+                <h4 className="text-white font-semibold mb-3 flex items-center space-x-2 text-sm">
+                  <span className="text-purple-400">ACTIONS</span>
+                </h4>
+                <div className="space-y-2">
                   <Link
-                    href={`/feedback/${id}`}
-                    className="block w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-center rounded-lg transition-all duration-200 text-sm"
+                    href="/"
+                    className="block w-full px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-center rounded-lg border border-slate-600 hover:border-slate-500 transition-all duration-200 text-xs"
                   >
-                    View Results
+                    Dashboard
                   </Link>
-                )}
+                  <Link
+                    href="/createinterview"
+                    className="block w-full px-3 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-center rounded-lg transition-all duration-200 text-xs"
+                  >
+                    New Interview
+                  </Link>
+                  {feedback && (
+                    <Link
+                      href={`/feedback/${id}`}
+                      className="block w-full px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-center rounded-lg transition-all duration-200 text-xs"
+                    >
+                      View Results
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -24,350 +24,38 @@ import {
   Play,
   X,
   SlidersHorizontal,
+  CheckCircle,
 } from "lucide-react";
 
-// Extended interview templates data
-const interviewTemplates = [
-  // Frontend Development
-  {
-    id: "frontend-react-1",
-    role: "Frontend Developer",
-    type: "Technical",
-    techstack: ["React", "JavaScript", "CSS", "HTML", "Redux"],
-    category: "Frontend",
-    difficulty: "Intermediate",
-    duration: "45 minutes",
-    questions: 12,
-    description:
-      "Comprehensive React ecosystem interview covering hooks, state management, and modern patterns",
-    rating: 4.8,
-    completions: 2340,
-    tags: ["Popular", "Updated"],
-  },
-  {
-    id: "frontend-vue-1",
-    role: "Vue.js Developer",
-    type: "Technical",
-    techstack: ["Vue.js", "JavaScript", "Nuxt.js", "Vuex"],
-    category: "Frontend",
-    difficulty: "Intermediate",
-    duration: "40 minutes",
-    questions: 10,
-    description:
-      "Vue.js focused interview with composition API and ecosystem tools",
-    rating: 4.6,
-    completions: 1200,
-    tags: ["Trending"],
-  },
-  {
-    id: "frontend-angular-1",
-    role: "Angular Developer",
-    type: "Technical",
-    techstack: ["Angular", "TypeScript", "RxJS", "NgRx"],
-    category: "Frontend",
-    difficulty: "Advanced",
-    duration: "50 minutes",
-    questions: 14,
-    description:
-      "Advanced Angular interview covering architecture, observables, and enterprise patterns",
-    rating: 4.7,
-    completions: 980,
-    tags: [],
-  },
+// Import data from separate file
+import {
+  interviewTemplates,
+  categories as importedCategories,
+  difficulties,
+  types,
+  durations,
+} from "@/app/data/interviewTemplates";
 
-  // Backend Development
-  {
-    id: "backend-node-1",
-    role: "Backend Developer",
-    type: "Technical",
-    techstack: ["Node.js", "Express", "MongoDB", "Redis"],
-    category: "Backend",
-    difficulty: "Intermediate",
-    duration: "45 minutes",
-    questions: 13,
-    description:
-      "Node.js backend development with database optimization and API design",
-    rating: 4.9,
-    completions: 3100,
-    tags: ["Popular", "Hot"],
-  },
-  {
-    id: "backend-python-1",
-    role: "Python Developer",
-    type: "Technical",
-    techstack: ["Python", "Django", "PostgreSQL", "Celery"],
-    category: "Backend",
-    difficulty: "Intermediate",
-    duration: "50 minutes",
-    questions: 15,
-    description:
-      "Python backend development with Django framework and async processing",
-    rating: 4.8,
-    completions: 2800,
-    tags: ["Popular"],
-  },
-  {
-    id: "backend-java-1",
-    role: "Java Developer",
-    type: "Technical",
-    techstack: ["Java", "Spring Boot", "MySQL", "Kafka"],
-    category: "Backend",
-    difficulty: "Advanced",
-    duration: "55 minutes",
-    questions: 16,
-    description:
-      "Enterprise Java development with Spring ecosystem and microservices",
-    rating: 4.7,
-    completions: 2100,
-    tags: ["Enterprise"],
-  },
+// Icon mapping for categories
+const iconMap = {
+  Globe,
+  Palette,
+  Database,
+  Code,
+  BarChart3,
+  Cloud,
+  Smartphone,
+  Briefcase,
+  Users,
+  Shield,
+  CheckCircle,
+};
 
-  // Full Stack
-  {
-    id: "fullstack-mern-1",
-    role: "Full Stack Developer",
-    type: "Technical",
-    techstack: ["React", "Node.js", "MongoDB", "Express"],
-    category: "Full Stack",
-    difficulty: "Advanced",
-    duration: "60 minutes",
-    questions: 18,
-    description:
-      "Complete MERN stack interview covering end-to-end development",
-    rating: 4.9,
-    completions: 4200,
-    tags: ["Popular", "Comprehensive"],
-  },
-  {
-    id: "fullstack-next-1",
-    role: "Next.js Developer",
-    type: "Technical",
-    techstack: ["Next.js", "TypeScript", "Prisma", "Tailwind"],
-    category: "Full Stack",
-    difficulty: "Advanced",
-    duration: "55 minutes",
-    questions: 16,
-    description: "Modern full-stack development with Next.js and TypeScript",
-    rating: 4.8,
-    completions: 1800,
-    tags: ["Modern", "Trending"],
-  },
-
-  // Data Science & AI
-  {
-    id: "data-scientist-1",
-    role: "Data Scientist",
-    type: "Technical",
-    techstack: ["Python", "Pandas", "Scikit-learn", "TensorFlow"],
-    category: "Data Science",
-    difficulty: "Advanced",
-    duration: "60 minutes",
-    questions: 14,
-    description:
-      "Comprehensive data science interview with ML algorithms and statistical analysis",
-    rating: 4.8,
-    completions: 1500,
-    tags: ["Hot", "AI"],
-  },
-  {
-    id: "ml-engineer-1",
-    role: "ML Engineer",
-    type: "Technical",
-    techstack: ["Python", "PyTorch", "MLOps", "Docker"],
-    category: "Data Science",
-    difficulty: "Advanced",
-    duration: "65 minutes",
-    questions: 12,
-    description:
-      "Machine learning engineering with production deployment focus",
-    rating: 4.9,
-    completions: 890,
-    tags: ["Hot", "MLOps"],
-  },
-
-  // DevOps & Cloud
-  {
-    id: "devops-aws-1",
-    role: "DevOps Engineer",
-    type: "Technical",
-    techstack: ["AWS", "Docker", "Kubernetes", "Terraform"],
-    category: "DevOps",
-    difficulty: "Advanced",
-    duration: "55 minutes",
-    questions: 13,
-    description: "Cloud infrastructure and DevOps practices with AWS focus",
-    rating: 4.7,
-    completions: 1600,
-    tags: ["Cloud", "Popular"],
-  },
-  {
-    id: "sre-1",
-    role: "Site Reliability Engineer",
-    type: "Technical",
-    techstack: ["Linux", "Monitoring", "Automation", "Go"],
-    category: "DevOps",
-    difficulty: "Advanced",
-    duration: "50 minutes",
-    questions: 11,
-    description:
-      "SRE practices including monitoring, incident response, and automation",
-    rating: 4.6,
-    completions: 720,
-    tags: ["SRE"],
-  },
-
-  // Product & Management
-  {
-    id: "product-manager-1",
-    role: "Product Manager",
-    type: "Behavioral",
-    techstack: ["Product Strategy", "Analytics", "User Research"],
-    category: "Product",
-    difficulty: "Intermediate",
-    duration: "40 minutes",
-    questions: 8,
-    description:
-      "Product management interview focusing on strategy, prioritization, and stakeholder management",
-    rating: 4.7,
-    completions: 2200,
-    tags: ["Popular", "Leadership"],
-  },
-  {
-    id: "engineering-manager-1",
-    role: "Engineering Manager",
-    type: "Mixed",
-    techstack: ["Leadership", "Technical Strategy", "Team Management"],
-    category: "Management",
-    difficulty: "Advanced",
-    duration: "50 minutes",
-    questions: 10,
-    description:
-      "Engineering leadership interview covering technical and people management",
-    rating: 4.8,
-    completions: 1100,
-    tags: ["Leadership", "Management"],
-  },
-
-  // Mobile Development
-  {
-    id: "mobile-react-native-1",
-    role: "React Native Developer",
-    type: "Technical",
-    techstack: ["React Native", "JavaScript", "Expo", "Firebase"],
-    category: "Mobile",
-    difficulty: "Intermediate",
-    duration: "45 minutes",
-    questions: 12,
-    description: "Cross-platform mobile development with React Native",
-    rating: 4.6,
-    completions: 1400,
-    tags: ["Mobile", "Cross-platform"],
-  },
-  {
-    id: "mobile-flutter-1",
-    role: "Flutter Developer",
-    type: "Technical",
-    techstack: ["Flutter", "Dart", "Firebase", "State Management"],
-    category: "Mobile",
-    difficulty: "Intermediate",
-    duration: "45 minutes",
-    questions: 11,
-    description: "Flutter mobile app development with modern patterns",
-    rating: 4.7,
-    completions: 960,
-    tags: ["Mobile", "Google"],
-  },
-
-  // Security
-  {
-    id: "cybersecurity-1",
-    role: "Cybersecurity Analyst",
-    type: "Technical",
-    techstack: [
-      "Security",
-      "OWASP",
-      "Penetration Testing",
-      "Incident Response",
-    ],
-    category: "Security",
-    difficulty: "Advanced",
-    duration: "50 minutes",
-    questions: 13,
-    description:
-      "Cybersecurity interview covering threat analysis and security protocols",
-    rating: 4.8,
-    completions: 650,
-    tags: ["Security", "Critical"],
-  },
-];
-
-const categories = [
-  {
-    id: "all",
-    name: "All Categories",
-    icon: Globe,
-    count: interviewTemplates.length,
-  },
-  {
-    id: "Frontend",
-    name: "Frontend",
-    icon: Palette,
-    count: interviewTemplates.filter((t) => t.category === "Frontend").length,
-  },
-  {
-    id: "Backend",
-    name: "Backend",
-    icon: Database,
-    count: interviewTemplates.filter((t) => t.category === "Backend").length,
-  },
-  {
-    id: "Full Stack",
-    name: "Full Stack",
-    icon: Code,
-    count: interviewTemplates.filter((t) => t.category === "Full Stack").length,
-  },
-  {
-    id: "Data Science",
-    name: "Data Science",
-    icon: BarChart3,
-    count: interviewTemplates.filter((t) => t.category === "Data Science")
-      .length,
-  },
-  {
-    id: "DevOps",
-    name: "DevOps",
-    icon: Cloud,
-    count: interviewTemplates.filter((t) => t.category === "DevOps").length,
-  },
-  {
-    id: "Mobile",
-    name: "Mobile",
-    icon: Smartphone,
-    count: interviewTemplates.filter((t) => t.category === "Mobile").length,
-  },
-  {
-    id: "Product",
-    name: "Product",
-    icon: Briefcase,
-    count: interviewTemplates.filter((t) => t.category === "Product").length,
-  },
-  {
-    id: "Management",
-    name: "Management",
-    icon: Users,
-    count: interviewTemplates.filter((t) => t.category === "Management").length,
-  },
-  {
-    id: "Security",
-    name: "Security",
-    icon: Shield,
-    count: interviewTemplates.filter((t) => t.category === "Security").length,
-  },
-];
-
-const difficulties = ["All", "Beginner", "Intermediate", "Advanced"];
-const types = ["All", "Technical", "Behavioral", "Mixed"];
-const durations = ["All", "< 30 min", "30-45 min", "45-60 min", "> 60 min"];
+// Process categories with proper icons
+const categories = importedCategories.map((category) => ({
+  ...category,
+  icon: iconMap[category.icon] || Globe,
+}));
 
 const TemplateCard = ({ template }) => {
   const getDifficultyColor = (difficulty) => {
@@ -822,6 +510,38 @@ export default function InterviewTemplatesPage() {
               </Button>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Bottom CTA Section */}
+      <section className="relative py-20 bg-gray-900/30">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl font-black text-white mb-6">
+              Ready to Start Your{" "}
+              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Interview Journey?
+              </span>
+            </h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Choose from our comprehensive collection of interview templates
+              and start practicing today.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                asChild
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-8 py-4 rounded-xl"
+              >
+                <Link href="/createinterview">Create Custom Interview</Link>
+              </Button>
+              <Button
+                asChild
+                className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold px-8 py-4 rounded-xl"
+              >
+                <Link href="/interviews">View Your History</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
     </div>
