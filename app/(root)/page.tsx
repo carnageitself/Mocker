@@ -57,200 +57,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Enhanced dummy interview templates with more SEO-friendly data
-const dummyInterviewTemplates = [
-  {
-    id: "template-1",
-    role: "Frontend Developer",
-    type: "Technical",
-    techstack: "React, JavaScript, CSS",
-    createdAt: new Date("2024-12-01"),
-    isTemplate: true,
-    description:
-      "Master React ecosystem interviews with real-world coding challenges and behavioral questions",
-    difficulty: "Intermediate",
-    duration: "45 minutes",
-    questions: 12,
-    successRate: "94%",
-    completions: "2.4K+",
-  },
-  {
-    id: "template-2",
-    role: "Full Stack Developer",
-    type: "Technical",
-    techstack: "Node.js, React, MongoDB",
-    createdAt: new Date("2024-11-28"),
-    isTemplate: true,
-    description:
-      "Comprehensive full-stack preparation covering both frontend and backend technologies",
-    difficulty: "Advanced",
-    duration: "60 minutes",
-    questions: 15,
-    successRate: "96%",
-    completions: "3.1K+",
-  },
-  {
-    id: "template-3",
-    role: "Data Scientist",
-    type: "Technical",
-    techstack: "Python, Machine Learning, SQL",
-    createdAt: new Date("2024-11-25"),
-    isTemplate: true,
-    description:
-      "Advanced ML algorithms, statistical analysis, and data manipulation interview prep",
-    difficulty: "Advanced",
-    duration: "50 minutes",
-    questions: 10,
-    successRate: "92%",
-    completions: "1.8K+",
-  },
-  {
-    id: "template-4",
-    role: "Product Manager",
-    type: "Behavioral",
-    techstack: "Product Strategy, Analytics",
-    createdAt: new Date("2024-11-22"),
-    isTemplate: true,
-    description:
-      "Strategic thinking, stakeholder management, and data-driven decision making scenarios",
-    difficulty: "Intermediate",
-    duration: "40 minutes",
-    questions: 8,
-    successRate: "97%",
-    completions: "2.7K+",
-  },
-  {
-    id: "template-5",
-    role: "Backend Developer",
-    type: "Technical",
-    techstack: "Java, Spring Boot, PostgreSQL",
-    createdAt: new Date("2024-11-20"),
-    isTemplate: true,
-    description:
-      "Server-side development, database optimization, and system design fundamentals",
-    difficulty: "Intermediate",
-    duration: "45 minutes",
-    questions: 14,
-    successRate: "95%",
-    completions: "2.9K+",
-  },
-  {
-    id: "template-6",
-    role: "DevOps Engineer",
-    type: "Technical",
-    techstack: "AWS, Docker, Kubernetes",
-    createdAt: new Date("2024-11-18"),
-    isTemplate: true,
-    description:
-      "Cloud infrastructure, container orchestration, and CI/CD pipeline optimization",
-    difficulty: "Advanced",
-    duration: "55 minutes",
-    questions: 11,
-    successRate: "93%",
-    completions: "1.5K+",
-  },
-];
-
-// Enhanced TemplateCard component with success metrics
-const TemplateCard = ({ template }) => {
-  const getDifficultyColor = (difficulty) => {
-    switch (difficulty) {
-      case "Beginner":
-        return "text-green-400 bg-green-500/20";
-      case "Intermediate":
-        return "text-yellow-400 bg-yellow-500/20";
-      case "Advanced":
-        return "text-red-400 bg-red-500/20";
-      default:
-        return "text-gray-400 bg-gray-500/20";
-    }
-  };
-
-  return (
-    <article className="group relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-      <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-purple-500/50 transition-all duration-500 h-full backdrop-blur-sm">
-        {/* Header */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
-              {template.role} Interview Prep
-            </h3>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="px-2 py-1 bg-purple-500/20 text-purple-300 rounded-md text-xs font-medium">
-                {template.type}
-              </span>
-              <span
-                className={`px-2 py-1 rounded-md text-xs font-medium ${getDifficultyColor(
-                  template.difficulty
-                )}`}
-              >
-                {template.difficulty}
-              </span>
-              <span className="px-2 py-1 bg-green-500/20 text-green-300 rounded-md text-xs font-medium">
-                {template.successRate} Success
-              </span>
-            </div>
-          </div>
-          <div className="text-2xl">📝</div>
-        </div>
-
-        {/* Description */}
-        <p className="text-gray-300 text-sm mb-4 leading-relaxed">
-          {template.description}
-        </p>
-
-        {/* Tech Stack */}
-        <div className="mb-4">
-          <div className="text-xs text-gray-400 mb-2">
-            Technologies Covered:
-          </div>
-          <div className="flex flex-wrap gap-1">
-            {template.techstack.split(", ").map((tech, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded text-xs"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Enhanced Stats */}
-        <div className="grid grid-cols-3 gap-3 mb-6">
-          <div className="text-center">
-            <div className="text-lg font-bold text-white">
-              {template.questions}
-            </div>
-            <div className="text-xs text-gray-400">Questions</div>
-          </div>
-          <div className="text-center">
-            <div className="text-lg font-bold text-white">
-              {template.duration}
-            </div>
-            <div className="text-xs text-gray-400">Duration</div>
-          </div>
-          <div className="text-center">
-            <div className="text-lg font-bold text-white">
-              {template.completions}
-            </div>
-            <div className="text-xs text-gray-400">Completed</div>
-          </div>
-        </div>
-
-        {/* Action Button */}
-        <Button
-          asChild
-          className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 rounded-xl transition-all duration-300 transform group-hover:scale-105"
-        >
-          <Link href={`/interview/${template.id}`}>Start Mock Interview</Link>
-        </Button>
-      </div>
-    </article>
-  );
-};
-
 async function Home() {
   const user = await getCurrentUser();
 
@@ -657,19 +463,15 @@ async function Home() {
           {hasPastInterviews ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {userInterviews?.slice(0, 6).map((interview) => (
-                <div
+                <InterviewCard
                   key={interview.id}
-                  className="transform hover:scale-105 transition-all duration-300"
-                >
-                  <InterviewCard
-                    userId={user?.id}
-                    interviewId={interview.id}
-                    role={interview.role}
-                    type={interview.type}
-                    techstack={interview.techstack}
-                    createdAt={interview.createdAt}
-                  />
-                </div>
+                  userId={user?.id}
+                  interviewId={interview.id}
+                  role={interview.role}
+                  type={interview.type}
+                  techstack={interview.techstack}
+                  createdAt={interview.createdAt}
+                />
               ))}
             </div>
           ) : (
@@ -698,7 +500,7 @@ async function Home() {
         </div>
       </section>
 
-      {/* Enhanced Popular Templates Section */}
+      {/* Enhanced Popular Templates Section - Now showing real interviews with template-like styling */}
       <section className="relative py-20" id="templates">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-pink-900/15 to-indigo-900/10"></div>
         <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
@@ -720,46 +522,50 @@ async function Home() {
                 Proven templates used by 15,000+ successful candidates
               </p>
             </div>
-            <Button
-              asChild
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300"
-            >
-              <Link href="/templates">Explore All Templates</Link>
-            </Button>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {dummyInterviewTemplates.slice(0, 6).map((template) => (
-              <div
-                key={template.id}
-                className="transform hover:scale-105 transition-all duration-300"
+            {hasUpcomingInterviews && (
+              <Button
+                asChild
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300"
               >
-                <TemplateCard template={template} />
-              </div>
-            ))}
+                <Link href="/templates">Explore All Templates</Link>
+              </Button>
+            )}
           </div>
 
-          {hasUpcomingInterviews && allInterview && allInterview.length > 0 && (
-            <div className="mt-16">
-              <h3 className="text-2xl font-bold text-white mb-8 text-center">
-                Community Success Stories
-              </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {allInterview.slice(0, 3).map((interview) => (
-                  <div
-                    key={interview.id}
-                    className="transform hover:scale-105 transition-all duration-300"
-                  >
-                    <InterviewCard
-                      userId={user?.id}
-                      interviewId={interview.id}
-                      role={interview.role}
-                      type={interview.type}
-                      techstack={interview.techstack}
-                      createdAt={interview.createdAt}
-                    />
-                  </div>
-                ))}
+          {hasUpcomingInterviews && allInterview && allInterview.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {allInterview.slice(0, 6).map((interview) => (
+                <InterviewCard
+                  key={interview.id}
+                  userId={user?.id}
+                  interviewId={interview.id}
+                  role={interview.role}
+                  type={interview.type}
+                  techstack={interview.techstack}
+                  createdAt={interview.createdAt}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="relative overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl border border-gray-700 p-16 text-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5"></div>
+              <div className="relative">
+                <div className="w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                  <span className="text-5xl">🌟</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">
+                  Be the First Success Story
+                </h3>
+                <p className="text-gray-300 mb-8 text-lg max-w-md mx-auto">
+                  Join our community and start your journey to interview
+                  success. Your story could be featured here next!
+                </p>
+                <Button
+                  asChild
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  <Link href="/templates">Start Your Journey</Link>
+                </Button>
               </div>
             </div>
           )}
