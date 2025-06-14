@@ -42,12 +42,14 @@ import {
   Gamepad2,
   Calculator,
   Globe,
-  ChevronDown,
   X,
   CheckCircle,
   Award,
   Plus,
-  ChevronRight,
+  Grid3X3,
+  List,
+  BarChart3,
+  Target,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -233,7 +235,7 @@ const sortOptions = [
   "Duration",
 ];
 
-async function InterviewsPage({ userInterviews = [], userId = "user-1" }) {
+function InterviewsPage({ userInterviews = [], userId = "user-1" }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -241,7 +243,7 @@ async function InterviewsPage({ userInterviews = [], userId = "user-1" }) {
   const [selectedType, setSelectedType] = useState("All");
   const [selectedDuration, setSelectedDuration] = useState("All");
   const [sortBy, setSortBy] = useState("Recent");
-  const [showFilters, setShowFilters] = useState(false);
+  const [viewMode, setViewMode] = useState("grid");
 
   const filteredAndSortedInterviews = useMemo(() => {
     let filtered = userInterviews.filter((interview) => {
@@ -402,388 +404,384 @@ async function InterviewsPage({ userInterviews = [], userId = "user-1" }) {
   return (
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/40 to-pink-900/30"></div>
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
+      <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl"></div>
 
-        <div className="relative container mx-auto px-6 py-20">
+        <div className="relative container mx-auto px-4 sm:px-6 py-16 sm:py-20">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 rounded-full text-indigo-300 text-sm font-semibold mb-8 backdrop-blur-sm">
-              <span className="w-2 h-2 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full mr-3 animate-ping"></span>
+            <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 rounded-full text-indigo-300 text-xs sm:text-sm font-semibold mb-6 sm:mb-8 backdrop-blur-sm">
+              <span className="w-2 h-2 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full mr-2 sm:mr-3 animate-ping"></span>
               Your Interview History
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
               Track Your{" "}
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Interview Progress
               </span>
             </h1>
 
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto font-medium mb-8">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto font-medium mb-6 sm:mb-8 px-4">
               Review your completed interviews, track your improvement, and
               continue your journey to landing your dream job.
             </p>
 
             {/* Stats Cards */}
             {hasInterviews && (
-              <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
-                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-2xl p-6">
-                  <div className="flex items-center justify-center mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
-                      <CheckCircle className="w-6 h-6 text-white" />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto mb-8">
+                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6">
+                  <div className="flex items-center justify-center mb-3 sm:mb-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                      <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                   </div>
-                  <div className="text-3xl font-black text-white mb-2">
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">
                     {completedInterviews.length}
                   </div>
-                  <div className="text-sm text-gray-400">
+                  <div className="text-xs sm:text-sm text-gray-400">
                     Completed Interviews
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-2xl p-6">
-                  <div className="flex items-center justify-center mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
-                      <Award className="w-6 h-6 text-white" />
+                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6">
+                  <div className="flex items-center justify-center mb-3 sm:mb-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                      <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                   </div>
-                  <div className="text-3xl font-black text-white mb-2">
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">
                     {averageScore}
                   </div>
-                  <div className="text-sm text-gray-400">Average Score</div>
+                  <div className="text-xs sm:text-sm text-gray-400">
+                    Average Score
+                  </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-2xl p-6">
-                  <div className="flex items-center justify-center mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-                      <Clock className="w-6 h-6 text-white" />
+                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6">
+                  <div className="flex items-center justify-center mb-3 sm:mb-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+                      <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                   </div>
-                  <div className="text-3xl font-black text-white mb-2">
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1 sm:mb-2">
                     {totalHours}h
                   </div>
-                  <div className="text-sm text-gray-400">Practice Time</div>
+                  <div className="text-xs sm:text-sm text-gray-400">
+                    Practice Time
+                  </div>
                 </div>
               </div>
             )}
           </div>
-
-          {/* Search Bar */}
-          {hasInterviews && (
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <Input
-                  type="text"
-                  placeholder="Search interviews by role, skills, or keywords..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 pr-4 py-4 bg-gray-900/80 border-gray-700 rounded-2xl text-white placeholder-gray-400 text-lg backdrop-blur-sm focus:border-purple-500 focus:ring-purple-500"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Filter and Sort Controls */}
-          {hasInterviews && (
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-              <Button
-                onClick={() => setShowFilters(!showFilters)}
-                className="bg-gray-800/80 hover:bg-gray-700/80 text-white border border-gray-600 rounded-xl px-6 py-3 backdrop-blur-sm"
-              >
-                <Filter className="w-4 h-4 mr-2" />
-                {showFilters ? "Hide Filters" : "Show Filters"}
-                <ChevronDown
-                  className={`w-4 h-4 ml-2 transition-transform ${
-                    showFilters ? "rotate-180" : ""
-                  }`}
-                />
-              </Button>
-
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-400">Sort by:</span>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="px-3 py-2 bg-gray-800/80 border border-gray-600 rounded-xl text-white focus:border-purple-500 focus:outline-none backdrop-blur-sm"
-                >
-                  {sortOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
-      {/* Categories */}
+      {/* Main Content */}
       {hasInterviews && (
-        <section className="relative py-8 border-b border-gray-800">
-          <div className="container mx-auto px-6">
-            <div className="flex flex-wrap gap-3 justify-center">
-              {categoriesWithCounts.slice(0, 10).map((category) => {
-                const IconComponent = category.icon;
-                return (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
-                      selectedCategory === category.id
-                        ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white"
-                        : "bg-gray-800/60 text-gray-300 hover:bg-gray-700/60"
-                    }`}
-                  >
-                    <IconComponent className="w-4 h-4" />
-                    <span className="font-medium">{category.name}</span>
-                    <span className="text-xs bg-black/20 px-2 py-0.5 rounded-full">
-                      {category.count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Advanced Filters */}
-      {showFilters && hasInterviews && (
-        <section className="relative py-8 bg-gray-900/50 border-b border-gray-800">
-          <div className="container mx-auto px-6">
-            <div className="grid md:grid-cols-5 gap-6 max-w-5xl mx-auto">
-              {/* Status Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Status
-                </label>
-                <select
-                  value={selectedStatus}
-                  onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-purple-500 focus:outline-none"
-                >
-                  {statuses.map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Difficulty Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Difficulty
-                </label>
-                <select
-                  value={selectedDifficulty}
-                  onChange={(e) => setSelectedDifficulty(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-purple-500 focus:outline-none"
-                >
-                  {difficulties.map((difficulty) => (
-                    <option key={difficulty} value={difficulty}>
-                      {difficulty}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Type Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Interview Type
-                </label>
-                <select
-                  value={selectedType}
-                  onChange={(e) => setSelectedType(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-purple-500 focus:outline-none"
-                >
-                  {types.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Duration Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Duration
-                </label>
-                <select
-                  value={selectedDuration}
-                  onChange={(e) => setSelectedDuration(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-purple-500 focus:outline-none"
-                >
-                  {durations.map((duration) => (
-                    <option key={duration} value={duration}>
-                      {duration}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Clear Filters */}
-              <div className="flex items-end">
-                {hasActiveFilters && (
-                  <Button
-                    onClick={clearFilters}
-                    className="w-full bg-red-600 hover:bg-red-700 text-white rounded-lg py-2 flex items-center justify-center gap-2"
-                  >
-                    <X className="w-4 h-4" />
-                    Clear All
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Results Section */}
-      <section className="relative py-20" id="interviews">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/10 via-purple-900/15 to-blue-900/10"></div>
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
-
-        <div className="relative container mx-auto px-6">
-          {hasInterviews && (
-            <div className="flex items-center justify-between mb-12">
-              <div>
-                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-500/30 rounded-full text-blue-300 text-sm font-semibold mb-4 backdrop-blur-sm">
-                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-2 animate-pulse"></span>
-                  Your Interview History
+        <section className="relative py-8 sm:py-12">
+          <div className="container mx-auto px-4 sm:px-6">
+            {/* Search and Controls Bar */}
+            <div className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-gray-700 mb-8">
+              {/* Search Bar */}
+              <div className="mb-6">
+                <div className="relative max-w-2xl mx-auto">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Input
+                    type="text"
+                    placeholder="Search interviews by role, skills, or keywords..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-12 pr-4 py-3 sm:py-4 bg-gray-800/80 border-gray-600 rounded-xl text-white placeholder-gray-400 text-base sm:text-lg backdrop-blur-sm focus:border-purple-500 focus:ring-purple-500"
+                  />
                 </div>
-                <h2 className="text-4xl font-black text-white mb-3">
-                  {filteredAndSortedInterviews.length} Interviews{" "}
-                  <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                    Found
-                  </span>
+              </div>
+
+              {/* Categories */}
+              <div className="mb-6">
+                <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
+                  {categoriesWithCounts
+                    .filter((cat) => cat.count > 0)
+                    .slice(0, 8)
+                    .map((category) => {
+                      const IconComponent = category.icon;
+                      return (
+                        <button
+                          key={category.id}
+                          onClick={() => setSelectedCategory(category.id)}
+                          className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl transition-all duration-300 text-sm sm:text-base ${
+                            selectedCategory === category.id
+                              ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg"
+                              : "bg-gray-800/60 text-gray-300 hover:bg-gray-700/60 hover:text-white"
+                          }`}
+                        >
+                          <IconComponent className="w-4 h-4" />
+                          <span className="font-medium hidden sm:inline">
+                            {category.name}
+                          </span>
+                          <span className="font-medium sm:hidden">
+                            {category.name.split(" ")[0]}
+                          </span>
+                          <span className="text-xs bg-black/20 px-2 py-0.5 rounded-full">
+                            {category.count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                </div>
+              </div>
+
+              {/* Filters and Controls */}
+              <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <div className="flex flex-wrap gap-3 w-full sm:w-auto">
+                  {/* Status Filter */}
+                  <select
+                    value={selectedStatus}
+                    onChange={(e) => setSelectedStatus(e.target.value)}
+                    className="px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm focus:border-purple-500 focus:outline-none"
+                  >
+                    {statuses.map((status) => (
+                      <option key={status} value={status}>
+                        {status === "All" ? "All Status" : status}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Difficulty Filter */}
+                  <select
+                    value={selectedDifficulty}
+                    onChange={(e) => setSelectedDifficulty(e.target.value)}
+                    className="px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm focus:border-purple-500 focus:outline-none"
+                  >
+                    {difficulties.map((difficulty) => (
+                      <option key={difficulty} value={difficulty}>
+                        {difficulty === "All" ? "All Levels" : difficulty}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Type Filter */}
+                  <select
+                    value={selectedType}
+                    onChange={(e) => setSelectedType(e.target.value)}
+                    className="px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm focus:border-purple-500 focus:outline-none"
+                  >
+                    {types.map((type) => (
+                      <option key={type} value={type}>
+                        {type === "All" ? "All Types" : type}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Duration Filter */}
+                  <select
+                    value={selectedDuration}
+                    onChange={(e) => setSelectedDuration(e.target.value)}
+                    className="px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm focus:border-purple-500 focus:outline-none"
+                  >
+                    {durations.map((duration) => (
+                      <option key={duration} value={duration}>
+                        {duration === "All" ? "Any Duration" : duration}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Clear Filters */}
+                  {hasActiveFilters && (
+                    <Button
+                      onClick={clearFilters}
+                      className="bg-red-600 hover:bg-red-700 text-white rounded-lg px-3 py-2 flex items-center gap-2 text-sm"
+                    >
+                      <X className="w-4 h-4" />
+                      <span className="hidden sm:inline">Clear</span>
+                    </Button>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  {/* Sort */}
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm focus:border-purple-500 focus:outline-none"
+                  >
+                    {sortOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* View Mode Toggle */}
+                  <div className="flex items-center gap-1 bg-gray-800 rounded-lg p-1">
+                    <button
+                      onClick={() => setViewMode("grid")}
+                      className={`p-2 rounded-md transition-colors ${
+                        viewMode === "grid"
+                          ? "bg-purple-600 text-white"
+                          : "text-gray-400 hover:text-white"
+                      }`}
+                    >
+                      <Grid3X3 className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setViewMode("list")}
+                      className={`p-2 rounded-md transition-colors ${
+                        viewMode === "list"
+                          ? "bg-purple-600 text-white"
+                          : "text-gray-400 hover:text-white"
+                      }`}
+                    >
+                      <List className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Results Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-white">
+                  {filteredAndSortedInterviews.length} Interviews Found
                 </h2>
-                <p className="text-xl text-gray-300 font-medium">
+                <p className="text-gray-400 mt-1 text-sm sm:text-base">
                   {selectedCategory !== "all"
-                    ? `in ${selectedCategory}`
+                    ? `in ${
+                        categoriesWithCounts.find(
+                          (c) => c.id === selectedCategory
+                        )?.name || selectedCategory
+                      }`
                     : "across all categories"}
                 </p>
               </div>
+
               <div className="flex items-center gap-4">
                 {hasActiveFilters && (
                   <div className="flex items-center gap-2 text-sm text-purple-300">
                     <Filter className="w-4 h-4" />
-                    Filters active
+                    <span className="hidden sm:inline">Filters active</span>
                   </div>
                 )}
                 <Button
                   asChild
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-6 py-3 rounded-xl flex items-center gap-2"
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-xl flex items-center gap-2 text-sm sm:text-base"
                 >
                   <Link href="/templates">
                     <Plus className="w-4 h-4" />
-                    New Interview
+                    <span className="hidden sm:inline">New Interview</span>
+                    <span className="sm:hidden">New</span>
                   </Link>
                 </Button>
               </div>
             </div>
-          )}
 
-          {/* Interviews Grid using the same InterviewCard component */}
-          {filteredAndSortedInterviews.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredAndSortedInterviews.map((interview) => (
-                <InterviewCard
-                  key={interview.id}
-                  userId={userId}
-                  interviewId={interview.id}
-                  role={interview.role}
-                  type={interview.type}
-                  techstack={interview.techstack}
-                  createdAt={interview.createdAt}
-                />
-              ))}
-            </div>
-          ) : hasInterviews ? (
-            // No results found state (when filters are applied)
-            <div className="text-center py-16">
-              <div className="w-32 h-32 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Search className="w-12 h-12 text-gray-500" />
+            {/* Interviews Grid/List */}
+            {filteredAndSortedInterviews.length > 0 ? (
+              <div
+                className={
+                  viewMode === "grid"
+                    ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+                    : "space-y-4"
+                }
+              >
+                {filteredAndSortedInterviews.map((interview) => (
+                  <InterviewCard
+                    key={interview.id}
+                    userId={userId}
+                    interviewId={interview.id}
+                    role={interview.role}
+                    type={interview.type}
+                    techstack={interview.techstack}
+                    createdAt={interview.createdAt}
+                  />
+                ))}
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">
-                No Interviews Found
-              </h3>
-              <p className="text-gray-400 mb-6 max-w-md mx-auto">
-                Try adjusting your search criteria or filters to find more
-                interviews.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  onClick={clearFilters}
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-6 py-3 rounded-xl"
-                >
-                  Clear All Filters
-                </Button>
-                <Button
-                  asChild
-                  className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold px-6 py-3 rounded-xl"
-                >
-                  <Link href="/templates">Browse Templates</Link>
-                </Button>
+            ) : (
+              <div className="text-center py-16">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Search className="w-8 h-8 sm:w-12 sm:h-12 text-gray-500" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
+                  No Interviews Found
+                </h3>
+                <p className="text-gray-400 mb-6 max-w-md mx-auto text-sm sm:text-base">
+                  Try adjusting your search criteria or filters to find more
+                  interviews.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    onClick={clearFilters}
+                    className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-6 py-3 rounded-xl"
+                  >
+                    Clear All Filters
+                  </Button>
+                  <Button
+                    asChild
+                    className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold px-6 py-3 rounded-xl"
+                  >
+                    <Link href="/templates">Browse Templates</Link>
+                  </Button>
+                </div>
               </div>
-            </div>
-          ) : (
-            // No interviews at all state (same as home page pattern)
-            <div className="relative overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl border border-gray-700 p-16 text-center">
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* No Interviews State */}
+      {!hasInterviews && (
+        <section className="relative py-20">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl border border-gray-700 p-12 sm:p-16 text-center">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5"></div>
               <div className="relative">
-                <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
-                  <span className="text-5xl">🎯</span>
+                <div className="w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl">
+                  <span className="text-3xl sm:text-5xl">🎯</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">
                   Begin Your Success Story
                 </h3>
-                <p className="text-gray-300 mb-8 text-lg max-w-md mx-auto">
+                <p className="text-gray-300 mb-6 sm:mb-8 text-base sm:text-lg max-w-md mx-auto">
                   Take your first AI-powered mock interview and start tracking
                   your journey to landing your dream job
                 </p>
                 <Button
                   asChild
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 transform hover:scale-105"
                 >
                   <Link href="/templates">Start Your First Interview</Link>
                 </Button>
               </div>
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* Bottom CTA Section */}
-      <section className="relative py-20 bg-gray-900/30">
-        <div className="container mx-auto px-6 text-center">
+      <section className="relative py-16 sm:py-20 bg-gradient-to-r from-gray-900/50 to-gray-800/50">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-black text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-4 sm:mb-6">
               Keep Improving Your{" "}
               <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Interview Skills
               </span>
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-6 sm:mb-8">
               Practice makes perfect. Continue your interview preparation
               journey with new templates and challenges.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 asChild
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-8 py-4 rounded-xl"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl"
               >
                 <Link href="/templates">Browse Templates</Link>
               </Button>
               <Button
                 asChild
-                className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold px-8 py-4 rounded-xl"
+                className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl"
               >
                 <Link href="/createinterview">Create Custom Interview</Link>
               </Button>
