@@ -196,37 +196,45 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
       {/* Right Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center relative min-h-screen">
-        {/* Mobile Background - Clean and Professional */}
-        <div className="lg:hidden absolute inset-0">
-          {/* Clean gradient background for mobile */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/50 to-indigo-50/30"></div>
-          {/* Subtle decorative elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100/40 to-purple-100/30 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-indigo-100/40 to-cyan-100/30 rounded-full blur-2xl"></div>
+        {/* Mobile Background - Completely redesigned */}
+        <div className="lg:hidden absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">
+          {/* Animated background elements */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+          <div
+            className="absolute bottom-20 left-0 w-40 h-40 bg-white/5 rounded-full blur-2xl animate-pulse"
+            style={{ animationDelay: "1s" }}
+          ></div>
+          <div
+            className="absolute top-1/3 left-1/2 w-24 h-24 bg-pink-400/20 rounded-full blur-xl animate-pulse"
+            style={{ animationDelay: "2s" }}
+          ></div>
         </div>
 
         {/* Desktop Background */}
         <div className="hidden lg:block absolute inset-0 bg-white"></div>
 
-        <div className="relative z-10 w-full max-w-md p-6 sm:p-8 lg:p-12">
-          {/* Mobile Logo & Header */}
-          <div className="lg:hidden text-center mb-8">
+        <div className="relative z-10 w-full max-w-md mx-4 lg:mx-0 lg:p-12">
+          {/* Mobile Header - Completely redesigned */}
+          <div className="lg:hidden text-center mb-8 pt-8">
+            {/* Logo */}
             <div className="flex items-center justify-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <Image src="/logo.svg" alt="logo" height={24} width={24} />
+              <div className="w-14 h-14 bg-white/90 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-2xl">
+                <Image src="/logo.svg" alt="logo" height={28} width={28} />
               </div>
-              <h1 className="text-3xl font-black text-gray-900">PrepWise</h1>
+              <h1 className="text-4xl font-black text-white drop-shadow-lg">
+                PrepWise
+              </h1>
             </div>
 
-            {/* Mobile welcome message */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                {isSignIn ? "Welcome Back!" : "Join PrepWise"}
+            {/* Welcome message - cleaner design */}
+            <div className="space-y-2 mb-6">
+              <h2 className="text-2xl font-bold text-white">
+                {isSignIn ? "Welcome Back!" : "Get Started"}
               </h2>
-              <p className="text-gray-600 text-sm">
+              <p className="text-white/80 text-sm leading-relaxed">
                 {isSignIn
-                  ? "Continue your AI interview preparation journey"
-                  : "Start mastering interviews with AI today"}
+                  ? "Sign in to continue your journey"
+                  : "Create your account in seconds"}
               </p>
             </div>
           </div>
@@ -243,11 +251,11 @@ const AuthForm = ({ type }: { type: FormType }) => {
             </p>
           </div>
 
-          {/* Form Container */}
-          <div className="bg-white/90 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none rounded-2xl lg:rounded-none p-6 lg:p-0 border lg:border-0 border-gray-200/50 shadow-lg lg:shadow-none">
-            {/* Social Login Buttons */}
+          {/* Form Container - Mobile optimized */}
+          <div className="bg-white/95 lg:bg-transparent backdrop-blur-lg lg:backdrop-blur-none rounded-3xl lg:rounded-none p-6 lg:p-0 shadow-2xl lg:shadow-none border border-white/20 lg:border-0">
+            {/* Social Login Buttons - Mobile optimized */}
             <div className="space-y-3 mb-6">
-              <button className="w-full flex items-center justify-center space-x-3 py-3 px-4 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors duration-200 group bg-white shadow-sm">
+              <button className="w-full flex items-center justify-center space-x-3 py-3.5 px-4 border border-gray-200 lg:border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-200 group bg-white shadow-sm hover:shadow-md">
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
                     fill="#4285F4"
@@ -266,12 +274,12 @@ const AuthForm = ({ type }: { type: FormType }) => {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                <span className="text-gray-700 font-medium group-hover:text-gray-900">
+                <span className="text-gray-700 font-semibold group-hover:text-gray-900">
                   Continue with Google
                 </span>
               </button>
 
-              <button className="w-full flex items-center justify-center space-x-3 py-3 px-4 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors duration-200 group bg-white shadow-sm">
+              <button className="w-full flex items-center justify-center space-x-3 py-3.5 px-4 border border-gray-200 lg:border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-200 group bg-white shadow-sm hover:shadow-md">
                 <svg
                   className="w-5 h-5 text-blue-600"
                   fill="currentColor"
@@ -279,7 +287,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 >
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
-                <span className="text-gray-700 font-medium group-hover:text-gray-900">
+                <span className="text-gray-700 font-semibold group-hover:text-gray-900">
                   Continue with Facebook
                 </span>
               </button>
@@ -291,7 +299,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-3 bg-white text-gray-500">
+                <span className="px-4 bg-white text-gray-500 font-medium">
                   or continue with email
                 </span>
               </div>
@@ -301,65 +309,65 @@ const AuthForm = ({ type }: { type: FormType }) => {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
+                className="space-y-5"
               >
                 {!isSignIn && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Full Name
                     </label>
                     <input
                       {...form.register("name")}
                       type="text"
                       placeholder="Enter your full name"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white text-gray-900 placeholder-gray-500 shadow-sm"
+                      className="w-full px-4 py-3.5 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white text-gray-900 placeholder-gray-400 shadow-sm hover:shadow-md text-base"
                     />
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Email Address
                   </label>
                   <input
                     {...form.register("email")}
                     type="email"
                     placeholder="Enter your email address"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white text-gray-900 placeholder-gray-500 shadow-sm"
+                    className="w-full px-4 py-3.5 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white text-gray-900 placeholder-gray-400 shadow-sm hover:shadow-md text-base"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Password
                   </label>
                   <input
                     {...form.register("password")}
                     type="password"
                     placeholder="Enter your password"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white text-gray-900 placeholder-gray-500 shadow-sm"
+                    className="w-full px-4 py-3.5 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white text-gray-900 placeholder-gray-400 shadow-sm hover:shadow-md text-base"
                   />
                   {!isSignIn && (
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-gray-500 mt-2 px-1">
                       Must be at least 3 characters long
                     </p>
                   )}
                 </div>
 
                 {isSignIn && (
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+                  <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
                     <label className="flex items-center">
                       <input
                         type="checkbox"
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                       />
-                      <span className="ml-2 text-sm text-gray-600">
-                        Remember this Device
+                      <span className="ml-2 text-sm text-gray-600 font-medium">
+                        Remember me
                       </span>
                     </label>
                     <Link
                       href="/forgot-password"
-                      className="text-sm text-blue-600 hover:text-blue-500 font-medium"
+                      className="text-sm text-blue-600 hover:text-blue-500 font-semibold hover:underline"
                     >
                       Forgot Password?
                     </Link>
@@ -369,7 +377,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none border-0 mt-6"
+                  className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-bold py-4 px-4 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none border-0 mt-6 text-base"
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center space-x-2">
@@ -391,12 +399,20 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 {isSignIn ? "New to PrepWise?" : "Already have an account?"}
                 <Link
                   href={!isSignIn ? "/sign-in" : "/sign-up"}
-                  className="ml-1 text-blue-600 hover:text-blue-500 font-medium"
+                  className="ml-1 text-blue-600 hover:text-blue-500 font-semibold hover:underline"
                 >
                   {!isSignIn ? "Sign in" : "Create an account"}
                 </Link>
               </p>
             </div>
+          </div>
+
+          {/* Mobile Footer */}
+          <div className="lg:hidden text-center mt-6 pb-8">
+            <p className="text-white/60 text-xs">
+              By continuing, you agree to our Terms of Service and Privacy
+              Policy
+            </p>
           </div>
         </div>
       </div>
